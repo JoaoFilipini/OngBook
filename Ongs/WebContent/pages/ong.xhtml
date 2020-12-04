@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:p="http://primefaces.org/ui"
+	  			xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			template="/templates/modeloSistema.xhtml">
+	  			
+	  			<ui:define name="menu">
+	  				<ui:include src="/includes/menu.xhtml" />
+	  			</ui:define>
+	  			
+	  			<ui:define name="conteudo">
+	  				<h:form id="frmOngListagem">
+	  					<p:dataTable id="tblOngs" emptyMessage="Nenhum registro encontrado!"
+	  							 	value="#{MBOng.itens}"
+	  							 	var="item"
+	  							 	paginator="true"
+	  							 	rows="10">
+	  							 	
+	  						<f:facet name="header">
+	  							ONGS - Listagem
+	  						</f:facet>
+	  						
+	  						<p:column headerText="ID da Ong" sortBy="#{item.idOng}" filterBy="#{item.idOng}">
+	  							<h:outputText value="#{item.idOng}" />
+	  						</p:column>
+	  						
+	  						
+	  						<p:column headerText="Nome da Ong" sortBy="#{item.nomeOng}" filterBy="#{item.nomeOng}">
+	  							<h:outputText value="#{item.nomeOng}" />
+	  						</p:column>
+	  						
+	  						
+	  						<p:column headerText="Descrição da Ong" sortBy="#{item.descricaoOng}" filterBy="#{item.descricaoOng}">
+	  							<h:outputText value="#{item.descricaoOng}" />
+	  						</p:column>
+	  						
+	  						<p:column headerText="Email para contato" sortBy="#{item.emailOng}" filterBy="#{item.emailOng}">
+	  							<h:outputText value="#{item.emailOng}" />
+	  						</p:column>
+	  						
+	  						<p:column headerText="Telefone para contato" sortBy="#{item.telefoneOng}" filterBy="#{item.telefoneOng}">
+	  							<h:outputText value="#{item.telefoneOng}" />
+	  						</p:column>
+	  						
+	  						<f:facet name="footer">
+	  							<p:commandButton value = "Novo" actionListener="#{MBOng.prepararNovo}"
+	  											 oncomplete="PF('dlgOngNovo').show();"
+	  											 update=":frmOngNovo:pnlOngNovo"/>
+	  						</f:facet>
+	  						
+	  					</p:dataTable>
+	  				</h:form>
+	  				
+	  				<p:dialog widgetVar="dlgOngNovo" closable="false"
+	  						  draggable="false" resizable="false"
+	  						  modal="true" appendTo="@(body)"
+	  						  header="Nova Ong">
+	  					<h:form id="frmOngNovo">
+	  						<h:panelGrid id="pnlOngNovo" columns="2">
+	  							<p:outputLabel value = "ID: "/>
+	  							<p:inputText size="30" maxlenght="50" value="#{MBOng.ong.idOng}" />
+	  							
+	  							<p:outputLabel value = "Nome: "/>
+	  							<p:inputText size="30" maxlenght="50" value="#{MBOng.ong.nomeOng}" />
+	  							
+	  							<p:outputLabel value = "Descrição: "/>
+	  							<p:inputText size="50" maxlenght="50" value="#{MBOng.ong.descricaoOng}" />
+	  							
+	  							<p:outputLabel value = "Email: "/>
+	  							<p:inputText size="30" maxlenght="50" value="#{MBOng.ong.emailOng}" />
+	  							
+	  							<p:outputLabel value = "Telefone: "/>
+	  							<p:inputText size="30" maxlenght="50" value="#{MBOng.ong.telefoneOng}" />
+	  							
+	  						</h:panelGrid>
+	  						<h:panelGrid>
+	  							<p:commandButton value="Gravar" actionListener="#{MBOng.novo}"
+	  											  oncomplete="PF('dlgOngNovo').hide();" 
+	  											  update=":frmOngListagem:tblOngs"/>
+	  							<p:commandButton value="Cancelar" onclick="PF('dlgOngNovo').hide();" />
+	  						</h:panelGrid>
+	  					</h:form>
+	  			    </p:dialog>
+	  			</ui:define>
+</ui:composition>
